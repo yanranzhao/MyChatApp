@@ -1,35 +1,39 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { User } from 'src/app/models/user';
 import { ChatService } from 'src/app/services/chat.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss']
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent implements OnInit, OnDestroy {
   @Input('user') moi: User;
   @ViewChild('inputbox') inputBox: ElementRef;
 
   messages: Message[] = [];
+  subscription: Subscription;
 
   constructor(private chatService: ChatService) { }
 
 
   ngOnInit() {
-    this.chatService.messageEmitter.subscribe(
+    this.subscription = this.chatService.messageEmitter.subscribe(
       res => {
         this.messages.push(res);
       }
     );
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   public onSubmit($event): void {
 
-    console.log(this.inputBox.nativeElement.value);
-
-    let messageData = {} as Message;
+    const messageData = {} as Message;
 
     messageData.sender = this.moi;
     messageData.content = this.inputBox.nativeElement.value;
