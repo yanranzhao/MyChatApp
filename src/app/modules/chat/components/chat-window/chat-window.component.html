@@ -1,0 +1,16 @@
+<div class="chat-window-container">
+
+  <div>
+    {{moi.name}}
+  </div>
+
+  <div class="message-container">
+    <app-message
+      *ngFor="let message of messages"
+      [message] = 'message'
+      [user] = 'moi'>
+    </app-message>
+  </div>
+
+  <input #inputbox placeholder="Enter your message" class="input-box" (keyup.enter)='onSubmit()'>
+</div>

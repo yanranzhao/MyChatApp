@@ -1,0 +1,27 @@
+.message-container {
+  display: flex;
+
+  .last {
+    order: 3;
+  }
+
+  .avatar {
+    height: 40px;
+    width: 40px;
+
+    max-height: 40px;
+    max-width: 40px;
+
+    border-radius: 50%;
+  }
+
+  &--moi{
+    justify-content: flex-end;
+  }
+
+  .msg-content {
+    background-color: cadetblue;
+    padding: 8px;
+    border-radius: 8px;
+  }
+}

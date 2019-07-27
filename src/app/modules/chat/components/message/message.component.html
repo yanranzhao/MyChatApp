@@ -1,0 +1,11 @@
+<div class=message-container [ngClass]='{"message-container--moi": isMoi}'>
+  <img
+    class="avatar"
+    src="{{ message.sender.iconUrl }}"
+    alt=""
+    [ngClass]="{'last' : isMoi }">
+
+  <div class="msg-content">
+    {{ message.content }}
+  </div>
+</div>
