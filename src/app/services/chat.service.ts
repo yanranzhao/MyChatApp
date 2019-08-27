@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
 import { Message } from '../models/message';
 import { Subject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class ChatService {
 
   messageEmitter = new Subject<Message>();
+  ws: WebSocket;
 
-  constructor() { }
+  wsDictionary = new Map<string, WebSocket>();
+
+  constructor() { 
+    this.ws  = new WebSocket('wss://50qd54anrg.execute-api.us-east-2.amazonaws.com/dev');
+
+    this.ws.addEventListener("message", (message)=>{
+      this.messageEmitter.next(JSON.parse(message.data));
+    });
+  }
 
   /**
    * @function sendMessage
@@ -17,6 +22,6 @@ export class ChatService {
    * @description Send message data to the backend
    */
   public sendMessage(userInput: Message): void {
-    this.messageEmitter.next(userInput);
+    this.ws.send(JSON.stringify(userInput));
   }
 }

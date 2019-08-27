@@ -1,5 +1,15 @@
 .chat-room-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   height: 100%;
+
+  app-chat-window{
+    flex: 1;
+    padding: 10px;
+  }
+
+  .verticle-line{
+    width: 2px;
+    background-color: black;
+    height: 100%;
+  }
 }

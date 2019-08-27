@@ -3,13 +3,27 @@
   flex-direction: column;
   height: 100%;
 
+  .user-name {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 18px;
+  }
+
   .message-container {
     height: 100%;
     flex: 1;
   }
+
+  app-message{
+    display: block;
+    margin-bottom: 12px;
+  }
+
   .input-box {
     width: 100%;
     height: 50px;
     font-size: 24px;
+    outline: none;
+    border: none;
   }
 }

@@ -7,17 +7,17 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-chat-window',
   templateUrl: './chat-window.component.html',
-  styleUrls: ['./chat-window.component.scss']
+  styleUrls: ['./chat-window.component.scss'],
+  providers:[ChatService]
 })
 export class ChatWindowComponent implements OnInit, OnDestroy {
   @Input('user') moi: User;
-  @ViewChild('inputbox') inputBox: ElementRef;
+  @ViewChild('inputbox', { static: true }) inputBox: ElementRef;
 
   messages: Message[] = [];
   subscription: Subscription;
 
   constructor(private chatService: ChatService) { }
-
 
   ngOnInit() {
     this.subscription = this.chatService.messageEmitter.subscribe(
@@ -31,10 +31,11 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public onSubmit($event): void {
+  public onSubmit(): void {
 
     const messageData = {} as Message;
 
+    messageData.action = 'sendMessage';
     messageData.sender = this.moi;
     messageData.content = this.inputBox.nativeElement.value;
     this.chatService.sendMessage(messageData);
